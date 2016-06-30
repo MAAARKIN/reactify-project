@@ -1,38 +1,51 @@
-var React = require('react');
-var ChatMessage = require('./ChatMessage.js');
+import React from 'react'
+import ChatMessage from './ChatMessage.js'
 
-module.exports = React.createClass({
-  getInitialState: function() {
-    return {
-      text: '',
-      messages: []
-    };
-  },
+export default class Chat extends React.Component {
 
-  submit: function(ev) {
-    ev.preventDefault();
+	static get defaultProps() { 
+		return {
+			text: '',
+			messages: []
+		}
+	}
 
-    var newMessage = <ChatMessage message={this.state.text} />;
+	constructor(props) {
+		super(props);
+		this.state = {
+			text: props.text,
+      		messages: props.messages
+		};
+		this.submit = this.submit.bind(this);
+		this.updateInput = this.updateInput.bind(this);
+	}
 
-    this.setState({
-      messages: this.state.messages.concat([newMessage]),
-      text: ''
-    });
-  },
+	submit(ev) {
+		ev.preventDefault();
 
-  updateInput: function(ev) {
-    this.setState({
-      text: ev.target.value
-    });
-  },
+		var newMessage = <ChatMessage message={this.state.text} />;
 
-  render: function() {
-    return <div>
-    <div>{this.state.messages}</div>
-    <form onSubmit={this.submit}>
-    <input onChange={this.updateInput} value={this.state.text} type="text" placeholder="Your message" />
-    <input type="submit" value="Send" />
-    </form>
-    </div>;
-  }
-});
+		this.setState({
+			messages: this.state.messages.concat([newMessage]),
+			text: ''
+		});
+	}
+
+	updateInput(ev) {
+		this.setState({
+			text: ev.target.value
+		});
+	}
+
+	render() {
+		return (
+			<div>
+				<div>{this.state.messages}</div>
+				<form onSubmit={this.submit}>
+					<input onChange={this.updateInput} value={this.state.text} type="text" placeholder="Your message" />
+					<input type="submit" value="Send" />
+				</form>
+			</div>
+		);
+	}
+}

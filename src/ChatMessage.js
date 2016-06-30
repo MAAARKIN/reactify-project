@@ -1,7 +1,7 @@
-var React = require('react');
+import React from 'react'
 
-module.exports = React.createClass({
-	render: function() {
+export default class ChatMessage extends React.Component {
+	render() {
 		return <p>{this.props.message}</p>;
 	}
-});
+}
