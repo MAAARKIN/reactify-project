@@ -14,7 +14,7 @@ export default class Chat extends React.Component {
 		super(props);
 		this.state = {
 			text: props.text,
-      		messages: props.messages
+			messages: props.messages
 		};
 		this.submit = this.submit.bind(this);
 		this.updateInput = this.updateInput.bind(this);
