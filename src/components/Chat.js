@@ -1,51 +1,23 @@
-import React from 'react'
-import ChatMessage from './ChatMessage.js'
+import React, {PropTypes} from 'react'
+import ChatForm from './ChatForm'
+import ListMessage from './ListMessage'
 
-export default class Chat extends React.Component {
+class Chat extends React.Component {
 
-	static get defaultProps() { 
-		return {
-			text: '',
-			messages: []
-		}
-	}
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			text: props.text,
-			messages: props.messages
-		};
-		this.submit = this.submit.bind(this);
-		this.updateInput = this.updateInput.bind(this);
-	}
-
-	submit(ev) {
-		ev.preventDefault();
-
-		var newMessage = <ChatMessage message={this.state.text} />;
-
-		this.setState({
-			messages: this.state.messages.concat([newMessage]),
-			text: ''
-		});
-	}
-
-	updateInput(ev) {
-		this.setState({
-			text: ev.target.value
-		});
-	}
-
-	render() {
-		return (
-			<div>
-				<div>{this.state.messages}</div>
-				<form onSubmit={this.submit}>
-					<input onChange={this.updateInput} value={this.state.text} type="text" placeholder="Your message" />
-					<input type="submit" value="Send" />
-				</form>
-			</div>
-		);
-	}
+    render() {
+        const {messages, actionSubmit} = this.props;
+        return (
+            <div>
+                <ListMessage list={messages} />
+                <ChatForm action={actionSubmit}/>
+            </div>
+        );
+    }
 }
+
+Chat.propTypes = {
+    messages: PropTypes.arrayOf(PropTypes.string),
+    actionSubmit: PropTypes.func.isRequired
+}
+
+export default Chat;
